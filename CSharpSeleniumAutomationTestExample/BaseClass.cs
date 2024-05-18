@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using Microsoft.Extensions.Configuration;
 
 namespace CSharpSeleniumAutomationTestExample
 {
@@ -9,6 +10,7 @@ namespace CSharpSeleniumAutomationTestExample
         protected IWebDriver _driver;
         private ChromeOptions _options;
         protected CommonMethods _commonMethods;
+        private IConfiguration _settings;
 
         [SetUp]
         public void SetUp()
@@ -38,10 +40,26 @@ namespace CSharpSeleniumAutomationTestExample
 
         public void LoginToGoogleDrive()
         {
+            _settings = GetConfig();
             _commonMethods.OpenPageByUrl("https://drive.google.com");
             _commonMethods.Click("//div[contains(@class,'hero-cta')]//a[@data-action='go to drive']");
             _commonMethods.SwitchToAnotherWindow(1);
-            _commonMethods.TypeText("//input[@id='identifierId']", "test95379241@gmail.com");
+            _commonMethods.TypeText("//input[@id='identifierId']", _settings["UserCredentails:Email"]);
+            _commonMethods.Click("//div[@id='identifierNext']");
+            _commonMethods.TypeText("//input[@type='password']", _settings["UserCredentails:Password"]);
+            _commonMethods.Click("//div[@id='passwordNext']");
+            _commonMethods.AssertThatElementIsVisible("//div[@class='dsnh2d' and descendant::span[text()='Welcome to Drive']]");
+        }
+
+        public static IConfiguration GetConfig()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile(
+                    "appsettings.json",
+                    optional: true,
+                    reloadOnChange: true);
+            return builder.Build();
         }
     }
 }
