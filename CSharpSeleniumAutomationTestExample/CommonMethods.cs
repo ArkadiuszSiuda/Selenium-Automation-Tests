@@ -9,9 +9,9 @@ namespace CSharpSeleniumAutomationTestExample
         private IWebDriver _driver;
         private WebDriverWait _wait;
 
-        public CommonMethods(IWebDriver driver)
+        public CommonMethods()
         {
-            _driver = driver;
+            _driver = Browser.Driver;
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
         }
 
