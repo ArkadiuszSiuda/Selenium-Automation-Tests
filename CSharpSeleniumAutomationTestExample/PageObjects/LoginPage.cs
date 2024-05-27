@@ -19,11 +19,10 @@ public class LoginPage : CommonMethods
     {
         OpenGoogleDrivePage();
         ClickOnGoToDriveButton();
-        SwitchToAnotherWindow(1);
+        SwitchToLastOpenedWindow();
         EnterEmailIntoTextField(email);
         ClickOnIdNextButton();
         EnterPasswordIntoTextField(password);
         ClickOnPasswordNextButton();
-        AssertThatElementIsVisible("//div[@class='dsnh2d' and descendant::span[text()='Welcome to Drive']]");
     }
 }

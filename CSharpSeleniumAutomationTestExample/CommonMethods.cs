@@ -26,6 +26,11 @@ namespace CSharpSeleniumAutomationTestExample
             _driver.SwitchTo().Window(_driver.WindowHandles[windowNumber]);
         }
 
+        public void SwitchToLastOpenedWindow()
+        {
+            _driver.SwitchTo().Window(_driver.WindowHandles[_driver.WindowHandles.Count - 1]);
+        }
+
         public void TypeText(string xpath, string text)
         {        
             _wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
