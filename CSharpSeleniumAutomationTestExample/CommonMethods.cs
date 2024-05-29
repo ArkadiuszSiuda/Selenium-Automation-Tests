@@ -12,7 +12,7 @@ namespace CSharpSeleniumAutomationTestExample
         public CommonMethods()
         {
             _driver = Browser.Driver;
-            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(15));
         }
 
         public void Click(string xpath)
@@ -34,6 +34,7 @@ namespace CSharpSeleniumAutomationTestExample
         public void TypeText(string xpath, string text)
         {        
             _wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
+            _driver.FindElement(By.XPath(xpath)).Click();
             _driver.FindElement(By.XPath(xpath)).SendKeys(text);
         }
 
