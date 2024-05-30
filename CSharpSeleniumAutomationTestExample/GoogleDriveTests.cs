@@ -16,12 +16,12 @@ namespace CSharpSeleniumAutomationTestExample
         }
 
         [Test]
-        public void Test()
+        public void CreateGoogleForm()
         {
             _mainPage.ClickOnNewButton();
             _mainPage.ChooseGoogleFormsOptionFromDropdown();
             _formPage.SwitchToLastOpenedWindow();
-            _formPage.EnterFormTitle("nigga");
+            _formPage.EnterFormTitle("test");
             _formPage.ClickOnNotActiveQuestion();
             _formPage.DeleteQuestion();
         }
