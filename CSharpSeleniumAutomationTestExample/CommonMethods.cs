@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
@@ -7,11 +8,13 @@ namespace CSharpSeleniumAutomationTestExample
     public class CommonMethods
     {
         private IWebDriver _driver;
+        private Actions _action;
         private WebDriverWait _wait;
 
         public CommonMethods()
         {
             _driver = Browser.Driver;
+            _action = Browser.Actions;
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(15));
         }
 
@@ -34,7 +37,8 @@ namespace CSharpSeleniumAutomationTestExample
         public void TypeText(string xpath, string text)
         {        
             _wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
-            _driver.FindElement(By.XPath(xpath)).Click();
+            _action.DoubleClick(_driver.FindElement(By.XPath(xpath))).Perform();
+            _action.KeyDown(Keys.Control).SendKeys("a").KeyUp(Keys.Control).Build().Perform();
             _driver.FindElement(By.XPath(xpath)).SendKeys(text);
         }
 

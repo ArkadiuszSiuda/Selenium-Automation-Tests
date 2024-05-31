@@ -21,7 +21,7 @@ namespace CSharpSeleniumAutomationTestExample
             _mainPage.ClickOnNewButton();
             _mainPage.ChooseGoogleFormsOptionFromDropdown();
             _formPage.SwitchToLastOpenedWindow();
-            _formPage.EnterFormTitle("test");
+            _formPage.EnterFormTitle(GenerateInputData.Title());
             _formPage.ClickOnNotActiveQuestion();
             _formPage.DeleteQuestion();
         }

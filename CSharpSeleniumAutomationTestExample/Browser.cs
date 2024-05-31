@@ -1,10 +1,12 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 
 namespace CSharpSeleniumAutomationTestExample;
 public static class Browser
 {
     public static IWebDriver Driver { get; }
+    public static Actions Actions { get; }
 
     static Browser()
     {
@@ -18,5 +20,6 @@ public static class Browser
         options.AddArguments("start-maximized");
 
         Driver = new ChromeDriver(options);
+        Actions = new Actions(Driver);
     }
 }
