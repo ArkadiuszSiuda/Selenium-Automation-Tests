@@ -50,7 +50,13 @@ namespace CSharpSeleniumAutomationTestExample
         public void AssertThatElementIsVisible(string xpath)
         {
             _wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
-            _driver.FindElement(By.XPath(xpath)).Displayed.IsElementVisible();
+            _driver.IsElementVisible(By.XPath(xpath)).AssertThatValueIsTrue();
+        }
+
+        public void AssertThatElementIsNotVisible(string xpath)
+        {
+            _wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(xpath)));
+            _driver.IsElementVisible(By.XPath(xpath)).AssertThatValueIsFalse();
         }
     }
 }
