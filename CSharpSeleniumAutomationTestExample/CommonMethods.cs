@@ -21,7 +21,9 @@ namespace CSharpSeleniumAutomationTestExample
         public void Click(string xpath)
         {
             _wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
-            _driver.FindElement(By.XPath(xpath)).Click();
+            var element = _driver.FindElement(By.XPath(xpath));
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({ behavior: 'instant', block: 'center' });", element);
+            element.Click();
         }
 
         public void SwitchToAnotherWindow(int windowNumber)
@@ -36,6 +38,14 @@ namespace CSharpSeleniumAutomationTestExample
 
         public void TypeText(string xpath, string text)
         {        
+            _wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
+            _action.DoubleClick(_driver.FindElement(By.XPath(xpath))).Perform();
+            _action.KeyDown(Keys.Control).SendKeys("a").KeyUp(Keys.Control).SendKeys(Keys.Backspace).Build().Perform();
+            _driver.FindElement(By.XPath(xpath)).SendKeys(text);
+        }
+
+        public void TypeTextWihtoutBackspace(string xpath, string text)
+        {
             _wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
             _action.DoubleClick(_driver.FindElement(By.XPath(xpath))).Perform();
             _action.KeyDown(Keys.Control).SendKeys("a").KeyUp(Keys.Control).Build().Perform();

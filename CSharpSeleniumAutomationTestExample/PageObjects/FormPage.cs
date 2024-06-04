@@ -12,13 +12,15 @@ public class FormPage : CommonMethods
     private string _fileUploadQuestionOption = "//div[@role='option' and contains(normalize-space(.),'File upload')]";
     private string _formSavingInProgressStatus = "//div[contains(@aria-label,'Saving')]";
     private string _fileUploadQuestionContinueButton = "//div[@role='button' and descendant::*[normalize-space(text())='Continue']]";
+    private string _questionTitleTextbox = "//div[@role='textbox' and @aria-label='Question']";
+    private string _addOptionTextbox = "//input[@aria-label='Add option']";
 
     public void DeleteQuestion()
     {
         Click(_activeQuestionXpath);
         Click(_activeQuestionXpath + _deleteButtonXpath);
     } 
-    public void EnterFormTitle(string title) => TypeText(_formTitleXpath, title);
+    public void EnterFormTitle(string title) => TypeTextWihtoutBackspace(_formTitleXpath, title);
     public void ClickOnNotActiveQuestion(int questionNumber) => Click(_notActiveQuestionXpath + $"[{questionNumber}]");
     public void ClickOnAddQuestionButton() => Click(_addQuestionButtonXpath);
     public void ClickOnQuestionTypeDropdown() => Click(_activeQuestionXpath + _questionTypeDropdown);
@@ -38,4 +40,11 @@ public class FormPage : CommonMethods
         Click(_fileUploadQuestionContinueButton);
         AssertThatElementIsNotVisible(_formSavingInProgressStatus);
     }
+    public void EnterQuestionTitle(string text) => TypeText(_activeQuestionXpath + _questionTitleTextbox, text);
+    public void AddNewOptionToQuestion() 
+    {
+        Click(_activeQuestionXpath + _addOptionTextbox);
+        AssertThatElementIsNotVisible(_formSavingInProgressStatus);
+    } 
+    public void EditQuestionAnswerOption(int optionNumber, string optionText) => TypeText(_activeQuestionXpath + $"//input[@value='Option {optionNumber}']", optionText);
 }
