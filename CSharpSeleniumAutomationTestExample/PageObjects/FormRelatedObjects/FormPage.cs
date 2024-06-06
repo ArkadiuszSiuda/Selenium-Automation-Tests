@@ -1,4 +1,4 @@
-﻿namespace CSharpSeleniumAutomationTestExample.PageObjects;
+﻿namespace CSharpSeleniumAutomationTestExample.PageObjects.FormRelatedObjects;
 public class FormPage : CommonMethods
 {
     private string _activeQuestionXpath = "//div[@data-item-id and @data-observe-selection and descendant::*[contains(@style,'background-color: #4285f4')]]";
@@ -14,12 +14,22 @@ public class FormPage : CommonMethods
     private string _fileUploadQuestionContinueButton = "//div[@role='button' and descendant::*[normalize-space(text())='Continue']]";
     private string _questionTitleTextbox = "//div[@role='textbox' and @aria-label='Question']";
     private string _addOptionTextbox = "//input[@aria-label='Add option']";
+    private string _questionRequiredSliderXpath = "//div[@aria-label='Required']";
+    private string _sendFormButtonXpath = "//div[@role='button' and descendant::*[normalize-space(text())='Send']]";
+
+    public SendFormWindow SendFormWindow { get; set; }
+
+    public FormPage()
+    {
+        SendFormWindow = new SendFormWindow();
+    }
+
 
     public void DeleteQuestion()
     {
         Click(_activeQuestionXpath);
         Click(_activeQuestionXpath + _deleteButtonXpath);
-    } 
+    }
     public void EnterFormTitle(string title) => TypeTextWihtoutBackspace(_formTitleXpath, title);
     public void ClickOnNotActiveQuestion(int questionNumber) => Click(_notActiveQuestionXpath + $"[{questionNumber}]");
     public void ClickOnAddQuestionButton() => Click(_addQuestionButtonXpath);
@@ -41,10 +51,13 @@ public class FormPage : CommonMethods
         AssertThatElementIsNotVisible(_formSavingInProgressStatus);
     }
     public void EnterQuestionTitle(string text) => TypeText(_activeQuestionXpath + _questionTitleTextbox, text);
-    public void AddNewOptionToQuestion() 
+    public void AddNewOptionToQuestion()
     {
         Click(_activeQuestionXpath + _addOptionTextbox);
         AssertThatElementIsNotVisible(_formSavingInProgressStatus);
-    } 
+    }
     public void EditQuestionAnswerOption(int optionNumber, string optionText) => TypeText(_activeQuestionXpath + $"//input[@value='Option {optionNumber}']", optionText);
+    public void MakeQuestionRequired() => Click(_activeQuestionXpath + _questionRequiredSliderXpath);
+    public void ClickOnSendFormButton() => Click(_sendFormButtonXpath);
+    public void OpenGoogleForm(string url) => OpenPageByUrl(url);
 }

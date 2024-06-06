@@ -3,12 +3,13 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 
 namespace CSharpSeleniumAutomationTestExample;
-public static class Browser
+public class Browser
 {
-    public static IWebDriver Driver { get; }
-    public static Actions Actions { get; }
+    public static Browser Instance { get; } = new Browser();
+    public IWebDriver Driver { get; set; }
+    public Actions Actions { get; set; }
 
-    static Browser()
+    public void Start()
     {
         var options = new ChromeOptions();
 
@@ -21,5 +22,10 @@ public static class Browser
 
         Driver = new ChromeDriver(options);
         Actions = new Actions(Driver);
+    }
+
+    public void Stop()
+    {
+        Instance.Driver.Quit();
     }
 }

@@ -1,18 +1,19 @@
-﻿using NUnit.Framework;
+﻿using CSharpSeleniumAutomationTestExample.PageObjects;
 using Microsoft.Extensions.Configuration;
-using CSharpSeleniumAutomationTestExample.PageObjects;
+using NUnit.Framework;
 
 namespace CSharpSeleniumAutomationTestExample
 {
     public class BaseClass
     {
         private LoginPage _loginPage;
-        private MainPage _mainPage;
+        protected MainPage _mainPage;
         private IConfiguration _settings;
 
         [SetUp]
         public void SetUp()
         {
+            Browser.Instance.Start();
             _loginPage = new LoginPage();
             _mainPage = new MainPage();
             _settings = GetConfig();
@@ -23,7 +24,7 @@ namespace CSharpSeleniumAutomationTestExample
         [TearDown]
         public void TearDown()
         {
-            Browser.Driver.Quit();
+            Browser.Instance.Stop();
         }
 
         public static IConfiguration GetConfig()

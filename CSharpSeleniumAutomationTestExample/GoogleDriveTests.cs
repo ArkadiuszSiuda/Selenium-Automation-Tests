@@ -1,21 +1,21 @@
-﻿using CSharpSeleniumAutomationTestExample.PageObjects;
+﻿using CSharpSeleniumAutomationTestExample.PageObjects.FormRelatedObjects;
 using NUnit.Framework;
 
 namespace CSharpSeleniumAutomationTestExample
 {
     public class GoogleDriveTests : BaseClass
     {
-        private MainPage _mainPage;
         private FormPage _formPage;
+        private string _formURL;
 
         [SetUp]
         public void GoogleDriveTestSetup()
         {
-            _mainPage = new MainPage();
             _formPage = new FormPage();
         }
 
         [Test]
+        [Order(1)]
         public void CreateGoogleForm()
         {
             _mainPage.ClickOnNewButton();
@@ -30,9 +30,10 @@ namespace CSharpSeleniumAutomationTestExample
             _formPage.EnterQuestionTitle("Checkbox Question");
             _formPage.AddNewOptionToQuestion();
             _formPage.AddNewOptionToQuestion();
-             _formPage.EditQuestionAnswerOption(1, "First checkbox");
+            _formPage.EditQuestionAnswerOption(1, "First checkbox");
             _formPage.EditQuestionAnswerOption(2, "Second checkbox");
             _formPage.EditQuestionAnswerOption(3, "Third checkbox");
+            _formPage.MakeQuestionRequired();
             _formPage.ClickOnAddQuestionButton();
             _formPage.ClickOnQuestionTypeDropdown();
             _formPage.ChooseDropdownQuestionType();
@@ -53,6 +54,19 @@ namespace CSharpSeleniumAutomationTestExample
             _formPage.EditQuestionAnswerOption(1, "First radiobutton");
             _formPage.EditQuestionAnswerOption(2, "Second radiobutton");
             _formPage.EditQuestionAnswerOption(3, "Third radiobutton");
+            _formPage.MakeQuestionRequired();
+            _formPage.ClickOnSendFormButton();
+
+            _formPage.SendFormWindow.ClickOnSendFormViaLinkOption();
+            _formPage.SendFormWindow.ClickOnShortenURLCheckbox();
+            _formURL = _formPage.SendFormWindow.GetFormShareURL();
+        }
+
+        [Test]
+        [Order(2)]
+        public void AnswerOnGoogleForm()
+        {
+            _formPage.OpenGoogleForm(_formURL);
         }
     }
 }

@@ -13,8 +13,8 @@ namespace CSharpSeleniumAutomationTestExample
 
         public CommonMethods()
         {
-            _driver = Browser.Driver;
-            _action = Browser.Actions;
+            _driver = Browser.Instance.Driver;
+            _action = Browser.Instance.Actions;
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(15));
         }
 
@@ -50,6 +50,13 @@ namespace CSharpSeleniumAutomationTestExample
             _action.DoubleClick(_driver.FindElement(By.XPath(xpath))).Perform();
             _action.KeyDown(Keys.Control).SendKeys("a").KeyUp(Keys.Control).Build().Perform();
             _driver.FindElement(By.XPath(xpath)).SendKeys(text);
+        }
+
+        public string GetElementAttributeValue(string xpath)
+        {
+            _wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
+            return _driver.FindElement(By.XPath(xpath)).GetAttribute("data-initial-value");
+
         }
 
         public void OpenPageByUrl(string url)
