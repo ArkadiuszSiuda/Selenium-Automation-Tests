@@ -5,13 +5,15 @@ namespace CSharpSeleniumAutomationTestExample
 {
     public class GoogleDriveTests : BaseClass
     {
-        private FormPage _formPage;
+        private CreateFormPage _formPage;
+        private AnswerFormPage _answerFormPage;
         private string _formURL;
 
         [SetUp]
         public void GoogleDriveTestSetup()
         {
-            _formPage = new FormPage();
+            _formPage = new CreateFormPage();
+            _answerFormPage = new AnswerFormPage();
         }
 
         [Test]
@@ -43,6 +45,7 @@ namespace CSharpSeleniumAutomationTestExample
             _formPage.EditQuestionAnswerOption(1, "First dropdown option");
             _formPage.EditQuestionAnswerOption(2, "Second dropdown option");
             _formPage.EditQuestionAnswerOption(3, "Third dropdown option");
+            _formPage.MakeQuestionRequired();
             _formPage.ClickOnAddQuestionButton();
             _formPage.ClickOnQuestionTypeDropdown();
             _formPage.ChooseFileUploadQuestionType();
@@ -67,6 +70,11 @@ namespace CSharpSeleniumAutomationTestExample
         public void AnswerOnGoogleForm()
         {
             _formPage.OpenGoogleForm(_formURL);
+            _answerFormPage.SelectCheckboxAnswerInQuestion(1, 1);
+            _answerFormPage.SelectCheckboxAnswerInQuestion(1, 3);
+            _answerFormPage.SelectRadiobuttonAnswerInQuestion(4, 2);
+            _answerFormPage.ClickOnSubmitFormButton();
+            _answerFormPage.SelectDropdownOptionInQuestion(2, 3);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿namespace CSharpSeleniumAutomationTestExample.PageObjects.FormRelatedObjects;
-public class FormPage : CommonMethods
+public class CreateFormPage : CommonMethods
 {
     private string _activeQuestionXpath = "//div[@data-item-id and @data-observe-selection and descendant::*[contains(@style,'background-color: #4285f4')]]";
     private string _notActiveQuestionXpath = "//div[@data-item-id and @data-observe-selection and not(descendant::*[(contains(@style,'background-color'))])]";
@@ -19,7 +19,7 @@ public class FormPage : CommonMethods
 
     public SendFormWindow SendFormWindow { get; set; }
 
-    public FormPage()
+    public CreateFormPage()
     {
         SendFormWindow = new SendFormWindow();
     }
@@ -57,7 +57,12 @@ public class FormPage : CommonMethods
         AssertThatElementIsNotVisible(_formSavingInProgressStatus);
     }
     public void EditQuestionAnswerOption(int optionNumber, string optionText) => TypeText(_activeQuestionXpath + $"//input[@value='Option {optionNumber}']", optionText);
-    public void MakeQuestionRequired() => Click(_activeQuestionXpath + _questionRequiredSliderXpath);
+    public void MakeQuestionRequired()
+    {
+        Click(_activeQuestionXpath + _questionRequiredSliderXpath);
+        AssertThatElementIsNotVisible(_formSavingInProgressStatus);
+    } 
+
     public void ClickOnSendFormButton() => Click(_sendFormButtonXpath);
     public void OpenGoogleForm(string url) => OpenPageByUrl(url);
 }
