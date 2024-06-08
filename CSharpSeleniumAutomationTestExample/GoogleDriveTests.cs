@@ -74,6 +74,7 @@ namespace CSharpSeleniumAutomationTestExample
             _answerFormPage.SelectCheckboxAnswerInQuestion(1, 3);
             _answerFormPage.SelectRadiobuttonAnswerInQuestion(4, 2);
             _answerFormPage.ClickOnSubmitFormButton();
+            _answerFormPage.AssertThatQuestionRequiredInfoIsVisible(2);
             _answerFormPage.SelectDropdownOptionInQuestion(2, 3);
         }
     }

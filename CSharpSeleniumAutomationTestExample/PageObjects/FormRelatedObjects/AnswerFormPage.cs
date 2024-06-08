@@ -7,6 +7,7 @@ public class AnswerFormPage : CommonMethods
     private string _dropdownXpath = "//div[@role='listbox']";
     private string _dropdownOptionXpath = "//div[@role='option']";
     private string _sumbitFormButtonXpath = "//div[@role='button' and descendant::*[normalize-space(text())='Submit']]";
+    private string _requiredQuestionInfoXpath = "//span[text()='This is a required question']";
 
     public void SelectCheckboxAnswerInQuestion(int questionNumber, int checkboxNumber) => Click(_questionXpath + $"[{questionNumber}]" + _checkboxXpath + $"[{checkboxNumber}]");
     public void SelectRadiobuttonAnswerInQuestion(int questionNumber, int radiobuttonNumber) => Click(_questionXpath + $"[{questionNumber}]" + _radiobuttonXpath + $"[{radiobuttonNumber}]");
@@ -16,4 +17,5 @@ public class AnswerFormPage : CommonMethods
         Click(_dropdownXpath + _dropdownOptionXpath + $"[{dropdownOptionNumber}]");
     }
     public void ClickOnSubmitFormButton() => Click(_sumbitFormButtonXpath);
+    public void AssertThatQuestionRequiredInfoIsVisible(int questionNumber) => AssertThatElementIsVisible(_questionXpath + $"[{questionNumber}]" + _requiredQuestionInfoXpath);
 }
